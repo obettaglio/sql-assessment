@@ -204,3 +204,58 @@ FROM models
 ORDER BY name
 OFFSET 14
 LIMIT 10;
+
+
+==========
+9
+
+-----
+
+Select the model year, name, and id, and the award name for all of the models from 1964 and beyond. Include row(s)
+for model(s) even if they have not won awards.
+
+Note that in the result set, the award name should be NULL if
+the model is not in the awards table.
+
+So, the result set should be:
+ year |    name     | model_id |       name        
+------+-------------+----------+-------------------
+ 2015 | Malibu      |       47 | IIHS Safety Award
+ 2015 | Outback     |       48 | IIHS Safety Award
+ 1964 | Mustang     |       39 | 
+ 1964 | Mini Cooper |       46 | 
+ 1964 | Galaxie     |       40 | 
+ 1964 | Corvette    |       38 | 
+ 1964 | Bonneville  |       42 | 
+ 1964 | LeMans      |       41 | 
+ 1964 | Fury        |       44 | 
+ 1964 | Avanti      |       45 | 
+ 1964 | Grand Prix  |       43 | 
+(11 rows)
+
+
+-----
+
+
+SELECT models.year, models.name, model_id, awards.name
+FROM models
+LEFT JOIN awards
+ON models.model_id = awards.winner_id
+WHERE models.year > 1963;
+
+
+==========
+10
+
+-----
+
+Modify the query so it only selects brands who have models.
+
+-----
+
+
+SELECT b.name, m.year, m.name
+FROM brands AS b
+JOIN models AS m
+ON b.brand_id = m.brand_id
+ORDER BY b.name;
